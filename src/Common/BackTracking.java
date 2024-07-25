@@ -42,7 +42,7 @@ public class BackTracking {
                 backtrack(result, tempList, nums, used);
                 // After the recursive call, we backtrack by unmarking the element as used and removing it from tempList
                 used[i] = false; // Backtrack
-                tempList.remove(tempList.size() - 1); // Remove the last element to try another one
+                tempList.removeLast(); // Remove the last element to try another one
             }
         }
     }
@@ -55,7 +55,7 @@ public class BackTracking {
                 if (tempList.contains(nums[i])) continue; // element already exists, skip
                 tempList.add(nums[i]);
                 backtrack(result, tempList, nums);
-                tempList.remove(tempList.size() - 1); // remove last element
+                tempList.removeLast(); // remove last element
             }
         }
     }
@@ -68,7 +68,7 @@ public class BackTracking {
             for (int i = start; i <= n; i++) {
                 tempList.add(i);//add each integer to tempList
                 backtrack(result, tempList, i + 1, n, k);
-                tempList.remove(tempList.size() - 1);
+                tempList.removeLast();
             }
         }
     }
@@ -83,7 +83,7 @@ public class BackTracking {
             for (int i = start; i < candidates.length; i++) {
                 tempList.add(candidates[i]);
                 backtrack(result, tempList, candidates, remain - candidates[i], i); // Not i + 1 because we can reuse same elements
-                tempList.remove(tempList.size() - 1); // Remove last element for backtracking
+                tempList.removeLast(); // Remove last element for backtracking
             }
         }
     }
@@ -101,7 +101,7 @@ public class BackTracking {
                 if (i > start && candidates[i] == candidates[i - 1]) continue; // Skip duplicates
                 tempList.add(candidates[i]);
                 backtrack2(result, tempList, candidates, remain - candidates[i], i + 1); // Not reuse same elements
-                tempList.remove(tempList.size() - 1); // Remove last element for backtracking
+                tempList.removeLast(); // Remove last element for backtracking
             }
         }
     }
@@ -148,8 +148,46 @@ Output:
                 tempList.add(i);
                 backtrack3(result, tempList, remain - i, i, k, used); //  reuse same elements
                 used[i] = false;
-                tempList.remove(tempList.size() - 1); // Remove last element for backtracking
+                tempList.removeLast(); // Remove last element for backtracking
             }
         }
+    }
+
+    // para: start for not duplicates and order
+
+
+    public static void backtractLetter(List<String> result, StringBuilder current, String[] map, String digits, int index) {
+        if (index == digits.length()) {
+            result.add(current.toString());
+            return;
+        }
+
+        String letters = map[digits.charAt(index) - '2'];
+        for (char letter : letters.toCharArray()) {
+            current.append(letter);
+            backtractLetter(result, current, map, digits, index + 1);
+            current.deleteCharAt(current.length() - 1);
+        }
+    }
+
+    // Generate Parentheses
+    public static void backtrackParenthese(List<String> result, StringBuilder current, int open, int close, int max) {
+        if (current.length() == max * 2) {
+            result.add(current.toString());
+            return;
+        }
+
+        if (open < max) {
+            current.append('(');
+            backtrackParenthese(result, current, open + 1, close, max);
+            current.deleteCharAt(current.length() - 1);
+        }
+
+        if (close < open) {
+            current.append(')');
+            backtrackParenthese(result, current, open, close + 1, max);
+            current.deleteCharAt(current.length() - 1);
+        }
+
     }
 }

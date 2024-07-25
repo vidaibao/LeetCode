@@ -1,6 +1,8 @@
 package Common;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class Utils {
@@ -30,5 +32,23 @@ public class Utils {
         for (List<Integer> combination : arr2) {
             System.out.println(combination);
         }
+    }
+
+    public static String createString(char c, int length) {
+        char[] charArray = new char[length];
+        Arrays.fill(charArray, c);
+        return new String(charArray);
+    }
+
+    public static boolean isWellformedParentheses(String parentheses) {
+        Stack<Character> stack = new Stack<>();
+        for (char c : parentheses.toCharArray()) {
+            if (c == '(') {
+                stack.push(c);
+            } else if (c == ')') {
+                if (stack.isEmpty() || stack.pop() != '(') return false;
+            }
+        }
+        return stack.isEmpty();
     }
 }

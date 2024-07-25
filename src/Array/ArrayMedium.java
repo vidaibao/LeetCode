@@ -3,6 +3,7 @@ package Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 import static Common.BackTracking.*;
 import static Common.Utils.*;
@@ -20,9 +21,49 @@ public class ArrayMedium {
         //Combinations_77();
         //CombinationSum_39();
         //CombinationSum2_40();
-        CombinationSum3_216();
+        //CombinationSum3_216();
+        //LetterCombinationsOfAPhoneNumber_17();
+        GenerateParentheses_22();
 
     }
+
+    // Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+    private static void GenerateParentheses_22() {
+        int n = 3;
+        var result = generateParenthesis(n);
+        System.out.println(result);
+    }
+    static List<String> generateParenthesis(int n) {
+        List<String> result = new ArrayList<>();
+        backtrackParenthese(result, new StringBuilder(), 0, 0, n);
+        return result;
+    }
+
+
+
+
+
+
+
+    private static void LetterCombinationsOfAPhoneNumber_17() {
+        String s = "23";
+        var result = letterCombinations(s);
+        System.out.println(result);
+    }
+    static List<String> letterCombinations(String digits) {
+        if (digits == null || digits.length() == 0) {
+            return new ArrayList<>();
+        }
+        String[] map = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        List<String> result = new ArrayList<>();
+        backtractLetter(result, new StringBuilder(), map, digits, 0);
+        return result;
+    }
+
+
+
+
+
 
 
     //Only numbers 1 through 9 are used.
@@ -33,6 +74,7 @@ public class ArrayMedium {
         var result = combinationSum3(k, n);
         printList2(result);
     }
+
     static List<List<Integer>> combinationSum3(int k, int n) {
         List<List<Integer>> result = new ArrayList<>();
         boolean[] used = new boolean[10];
@@ -41,13 +83,13 @@ public class ArrayMedium {
     }
 
 
-
     private static void CombinationSum2_40() {
-        int[] ints = { 10, 1, 2, 7, 6, 1, 5 };
+        int[] ints = {10, 1, 2, 7, 6, 1, 5};
         int target = 8;
         var result = combinationSum2(ints, target);
         printList2(result);
     }
+
     private static List<List<Integer>> combinationSum2(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
         Arrays.sort(candidates); // Sort the array to handle duplicates
@@ -56,14 +98,12 @@ public class ArrayMedium {
     }
 
 
-
-
-
     private static void CombinationSum_39() {
-        int[] ints = { 2, 3, 6, 7 };
+        int[] ints = {2, 3, 6, 7};
         int target = 7;
         var result = combinationSum(ints, target);
     }
+
     static List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
         backtrack(result, new ArrayList<>(), candidates, target, 0);
@@ -71,12 +111,12 @@ public class ArrayMedium {
     }
 
 
-
     private static void Combinations_77() {
         int n = 4;
         int k = 2;
         List<List<Integer>> combinations = combine(n, k);
     }
+
     static List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> result = new ArrayList<>();
         backtrack(result, new ArrayList<>(), 1, n, k);
@@ -88,6 +128,7 @@ public class ArrayMedium {
         int[] nums = {1, 3, 1};
         var re = permuteUnique(nums);
     }
+
     static List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         Arrays.sort(nums); // Sort the array to handle duplicates
@@ -97,20 +138,16 @@ public class ArrayMedium {
     }
 
 
-
     private static void Permutations_46() {
         int[] nums = {2, 3, 1};
         var re = permute(nums);
     }
+
     private static List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         backtrack(result, new ArrayList<>(), nums);
         return result;
     }
-
-
-
-
 
 
     private static void NextPermutation_31() {
@@ -250,15 +287,15 @@ public class ArrayMedium {
                     if (rows[r][n] || cols[c][n] || boxes[boxIndex][n]) {
                         return false;
                     }
-                    rows[r][n] = true; cols[c][n] = true; boxes[boxIndex][n] = true;
+                    rows[r][n] = true;
+                    cols[c][n] = true;
+                    boxes[boxIndex][n] = true;
                 }
             }
         }
         // if no conflict, the board is valid
         return true;
     }
-
-
 
 
     private static void ThreeSum_15() {
