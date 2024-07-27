@@ -1,9 +1,6 @@
 package Array;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 import static Common.BackTracking.*;
 import static Common.Utils.*;
@@ -23,9 +20,80 @@ public class ArrayMedium {
         //CombinationSum2_40();
         //CombinationSum3_216();
         //LetterCombinationsOfAPhoneNumber_17();
-        GenerateParentheses_22();
+        //GenerateParentheses_22();
+        //Subsets_78();
+        CarPooling_1094();
 
     }
+
+    private static void CarPooling_1094() {
+        int capacity = 4;
+        int[][] trips = { {2,1,5}, {3,3,7} };
+        System.out.println(carPooling(trips, capacity));
+    }
+    static boolean carPooling(int[][] trips, int capacity) {
+        Hashtable<Integer, Integer> kilometers = new Hashtable<>();
+        Arrays.stream(trips)
+                .sorted((a, b) -> Integer.compare(a[1], b[1])); // sort by from location
+
+        for (var trip : trips) {
+            for (int i = trip[1]; i < trip[2]; i++) {
+                if (trip[0] > capacity) return false;
+                if (kilometers.containsKey(i)) {
+                    if (kilometers.get(i) + trip[0] > capacity) return false;
+                    kilometers.put(i, kilometers.get(i) + trip[0]);
+                } else {
+                    kilometers.put(i, trip[0]);
+                }
+            }
+        }
+        return true;
+    }
+
+
+
+    // Given an integer array nums of unique elements, return all possible subsets (the power set).
+    //
+    //The solution set must not contain duplicate subsets. Return the solution in any order.
+    private static void Subsets_78() {
+        int[] nums = { 1, 2, 3 };
+        var re = subsets(nums);
+        printList2(re);
+    }
+    static List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        backtrackSubsets(result, new ArrayList<>(), 0, nums);
+        return result;
+    }
+
+    private static void backtrackSubsets(List<List<Integer>> result, ArrayList<Integer> tempList, int start, int[] nums) {
+        result.add(new ArrayList<>(tempList));
+
+        for (int i = start; i < nums.length; i++) {
+            tempList.add(nums[i]);
+            backtrackSubsets(result, tempList, i + 1, nums);
+            tempList.removeLast();
+        }
+    }
+
+    //Example 1:
+    //
+    //Input: nums = [1,2,3]
+    //Output: [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+    //Example 2:
+    //
+    //Input: nums = [0]
+    //Output: [[],[0]]
+    //
+    //
+    //Constraints:
+    //
+    //1 <= nums.length <= 10
+    //-10 <= nums[i] <= 10
+    //All the numbers of nums are unique.
+
+
+
 
     // Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
     private static void GenerateParentheses_22() {
